@@ -14,8 +14,21 @@ services:
       - "9090:9090"
     volumes:
       - ./monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./alerting/prometheus/alert-rules.yml:/etc/prometheus/alert-rules.yml:ro
     depends_on:
       - observability-demo-app
+
+  alertmanager:
+    image: prom/alertmanager:latest
+    container_name: observability-alertmanager
+    ports:
+      - "9093:9093"
+    volumes:
+      - ./alerting/alertmanager/alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro
+    command:
+      - --config.file=/etc/alertmanager/alertmanager.yml
+    depends_on:
+      - prometheus
 
   grafana:
     image: grafana/grafana:latest

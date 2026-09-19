@@ -1,0 +1,11 @@
+groups:
+  - name: observability-alerts
+    rules:
+      - alert: ApplicationDown
+        expr: up{job="observability-demo-app"} == 0
+        for: 30s
+        labels:
+          severity: critical
+        annotations:
+          summary: "Observability demo application is down"
+          description: "Prometheus cannot reach the observability demo application."
