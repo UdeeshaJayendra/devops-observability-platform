@@ -6,3 +6,8 @@ scrape_configs:
     metrics_path: "/metrics"
     static_configs:
       - targets: ["observability-demo-app:3000"]
+
+  - job_name: "cadvisor"
+    metrics_path: "/metrics"
+    static_configs:
+      - targets: ["cadvisor:8080"]
