@@ -24,6 +24,7 @@ services:
       - "3100:3000"
     depends_on:
       - prometheus
+
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:latest
     container_name: observability-cadvisor
@@ -35,3 +36,31 @@ services:
       - /sys:/sys:ro
       - /var/lib/docker:/var/lib/docker:ro
       - /dev/disk/:/dev/disk:ro
+
+  loki:
+    image: grafana/loki:latest
+    container_name: observability-loki
+    ports:
+      - "3101:3100"
+    volumes:
+      - ./logging/loki/loki-config.yml:/etc/loki/config.yml:ro
+      - loki-data:/loki
+    command: -config.file=/etc/loki/config.yml
+
+  alloy:
+    image: grafana/alloy:latest
+    container_name: observability-alloy
+    ports:
+      - "12345:12345"
+    volumes:
+      - ./logging/alloy/config.alloy:/etc/alloy/config.alloy:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+    command:
+      - run
+      - --server.http.listen-addr=0.0.0.0:12345
+      - /etc/alloy/config.alloy
+    depends_on:
+      - loki
+
+volumes:
+  loki-data:
