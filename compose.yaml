@@ -37,6 +37,10 @@ services:
       - "3100:3000"
     depends_on:
       - prometheus
+    volumes:
+      - ./dashboards/json:/var/lib/grafana/dashboards:ro
+      - ./dashboards/provisioning/dashboards/dashboards.yml:/etc/grafana/provisioning/dashboards/dashboards.yml:ro
+      - ./provisioning/datasources/prometheus.yml:/etc/grafana/provisioning/datasources/prometheus.yml:ro
 
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:latest
@@ -74,6 +78,18 @@ services:
       - /etc/alloy/config.alloy
     depends_on:
       - loki
+
+  tempo:
+    image: grafana/tempo:latest
+    container_name: observability-tempo
+    ports:
+      - "3200:3200"
+      - "4317:4317"
+      - "4318:4318"
+    volumes:
+      - ./tracing/tempo.yaml:/etc/tempo.yaml:ro
+    command:
+      - "-config.file=/etc/tempo.yaml"
 
 volumes:
   loki-data:
