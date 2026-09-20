@@ -23,6 +23,7 @@ services:
     volumes:
       - ./monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
       - ./alerting/prometheus/alert-rules.yml:/etc/prometheus/alert-rules.yml:ro
+      - prometheus-data:/prometheus
     depends_on:
       - observability-demo-app
 
@@ -51,6 +52,7 @@ services:
       - ./dashboards/json:/var/lib/grafana/dashboards:ro
       - ./dashboards/provisioning/dashboards/dashboards.yml:/etc/grafana/provisioning/dashboards/dashboards.yml:ro
       - ./provisioning/datasources/prometheus.yml:/etc/grafana/provisioning/datasources/prometheus.yml:ro
+      - grafana-data:/var/lib/grafana
 
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:latest
@@ -102,8 +104,12 @@ services:
     restart: unless-stopped
     volumes:
       - ./tracing/tempo.yaml:/etc/tempo.yaml:ro
+      - tempo-data:/var/tempo
     command:
       - "-config.file=/etc/tempo.yaml"
 
 volumes:
   loki-data:
+  prometheus-data:
+  grafana-data:
+  tempo-data:
