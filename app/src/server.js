@@ -32,6 +32,15 @@ app.use((req, res, next) => {
     const duration = process.hrtime(start);
     const seconds = duration[0] + duration[1] / 1e9;
 
+    console.log(
+      JSON.stringify({
+        method: req.method,
+        route: req.route?.path || req.path,
+        status: res.statusCode,
+        duration_seconds: seconds
+      })
+    );
+
     httpRequests.inc({
       method: req.method,
       route: req.route?.path || req.path,
@@ -67,6 +76,18 @@ app.get("/api/hello", (req, res) => {
 app.get("/health", (req, res) => {
   res.json({
     status: "UP"
+  });
+});
+
+app.get("/api/test/cpu", (req, res) => {
+  const start = Date.now();
+
+  while (Date.now() - start < 10000) {
+    Math.sqrt(Math.random() * Math.random());
+  }
+
+  res.json({
+    message: "CPU load test completed"
   });
 });
 
