@@ -91,6 +91,20 @@ app.get("/api/test/cpu", (req, res) => {
   });
 });
 
+app.get("/api/test/error", (req, res) => {
+  console.error(
+    JSON.stringify({
+      event: "application_error",
+      message: "Intentional test error",
+      route: "/api/test/error"
+    })
+  );
+
+  res.status(500).json({
+    error: "Intentional test error"
+  });
+});
+
 app.get("/metrics", async (req, res) => {
   res.set("Content-Type", register.contentType);
   res.end(await register.metrics());
