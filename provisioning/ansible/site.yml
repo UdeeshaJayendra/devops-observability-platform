@@ -1,0 +1,19 @@
+---
+- name: Configure observability environment
+  hosts: local
+  gather_facts: false
+
+  tasks:
+    - name: Create observability configuration directory
+      ansible.builtin.file:
+        path: /ansible/managed-config
+        state: directory
+        mode: "0755"
+
+    - name: Create configuration file
+      ansible.builtin.copy:
+        content: |
+          environment=development
+          managed_by=ansible
+        dest: /ansible/managed-config/app.conf
+        mode: "0644"
