@@ -6,12 +6,20 @@ services:
     container_name: observability-demo-app
     ports:
       - "8081:3000"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
 
   prometheus:
     image: prom/prometheus:latest
     container_name: observability-prometheus
     ports:
       - "9090:9090"
+    restart: unless-stopped
     volumes:
       - ./monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
       - ./alerting/prometheus/alert-rules.yml:/etc/prometheus/alert-rules.yml:ro
@@ -23,6 +31,7 @@ services:
     container_name: observability-alertmanager
     ports:
       - "9093:9093"
+    restart: unless-stopped
     volumes:
       - ./alerting/alertmanager/alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro
     command:
@@ -35,6 +44,7 @@ services:
     container_name: observability-grafana
     ports:
       - "3100:3000"
+    restart: unless-stopped
     depends_on:
       - prometheus
     volumes:
@@ -47,6 +57,7 @@ services:
     container_name: observability-cadvisor
     ports:
       - "8082:8080"
+    restart: unless-stopped
     volumes:
       - /:/rootfs:ro
       - /var/run:/var/run:ro
@@ -59,6 +70,7 @@ services:
     container_name: observability-loki
     ports:
       - "3101:3100"
+    restart: unless-stopped
     volumes:
       - ./logging/loki/loki-config.yml:/etc/loki/config.yml:ro
       - loki-data:/loki
@@ -69,6 +81,7 @@ services:
     container_name: observability-alloy
     ports:
       - "12345:12345"
+    restart: unless-stopped
     volumes:
       - ./logging/alloy/config.alloy:/etc/alloy/config.alloy:ro
       - /var/run/docker.sock:/var/run/docker.sock
@@ -86,6 +99,7 @@ services:
       - "3200:3200"
       - "4317:4317"
       - "4318:4318"
+    restart: unless-stopped
     volumes:
       - ./tracing/tempo.yaml:/etc/tempo.yaml:ro
     command:
