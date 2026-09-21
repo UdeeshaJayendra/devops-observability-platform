@@ -1,10 +1,14 @@
-FROM node:22-alpine@sha256:c610fcdfb1d5b4740dd70c284ed3cb16bb857e0f7166196e36a5501df7a3aa32
+FROM node:22-alpine@sha256:b6f26b36c8ff49624cfdac716b8ea1138d606df02586a77d364bb5536a634f85
 
 WORKDIR /app
 
 COPY package.json .
 
 RUN npm install --omit=dev
+
+RUN rm -rf /usr/local/lib/node_modules/npm \
+    /usr/local/bin/npm \
+    /usr/local/bin/npx
 
 COPY src ./src
 
@@ -15,4 +19,4 @@ USER appuser
 
 EXPOSE 3000
 
-CMD ["npm", "start"]
+CMD ["node", "-r", "./src/tracing.js", "src/server.js"]
