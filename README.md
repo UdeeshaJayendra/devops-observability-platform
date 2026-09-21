@@ -1,4 +1,4 @@
-<img width="1903" height="906" alt="11-grafana-container-network-receive png" src="https://github.com/user-attachments/assets/d6533aca-389c-4670-9006-537e8905b477" /><img width="1915" height="911" alt="10-grafana-container-memory-usage png" src="https://github.com/user-attachments/assets/d85af01c-05a2-4e33-a12b-320c95cd85a6" /><img width="1917" height="422" alt="04-prometheus-http-request-rate png" src="https://github.com/user-attachments/assets/5d72c7ef-179a-46bb-a4f0-72cc7abedd14" /># DevOps Observability Platform
+# DevOps Observability Platform
 
 > An end-to-end local observability platform for monitoring applications, containers, Windows infrastructure, logs, alerts, and distributed traces — with CI/CD, infrastructure as code, configuration management, security hardening, incident simulation, and operational automation.
 
