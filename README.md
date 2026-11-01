@@ -10,6 +10,8 @@
 ![OpenTelemetry](https://img.shields.io/badge/OpenTelemetry-tracing-425CC7?logo=opentelemetry\&logoColor=white)
 
 ---
+## Detailed Architecture
+![Uploading Component 3.png…]()
 
 ## Overview
 
@@ -38,22 +40,6 @@ It also demonstrates operational practices including:
 
 The project follows an operational workflow:
 <img width="960" height="1096" alt="Gemini_Generated_Image_l1sv85l1sv85l1sv" src="https://github.com/user-attachments/assets/f798b173-4daf-472c-85c8-4410ad40cc00" />
-
-
-```text
-
-        Windows Host ──► Windows Exporter ──► Prometheus
-
-        Containers ────► cAdvisor ──────────► Prometheus
-
-        Prometheus ────► Alertmanager
-
-        GitHub ─────────► GitHub Actions ──► CI + Trivy
-
-        Terraform ─────► Docker Infrastructure
-
-        Ansible ───────► Configuration Management
-```
 
 ---
 
