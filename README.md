@@ -11,7 +11,7 @@
 
 ---
 ## Detailed Architecture
-![Uploading Component 3.png…]()
+<img width="1231" height="1278" alt="Component 3" src="https://github.com/user-attachments/assets/d1677281-c369-402d-8e57-af1ed6060e84" />
 
 ## Overview
 
